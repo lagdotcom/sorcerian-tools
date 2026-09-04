@@ -1,0 +1,9 @@
+/disks
+/out
+/.ruff_cache
+/.venv
+
+__pycache__
+
+*.bin
+*.d88
