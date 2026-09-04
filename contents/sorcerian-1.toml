@@ -1,0 +1,127 @@
+[disk]
+product = "Sorcerian"
+name = "Scenario 1"
+sha1 = "2abcfcda58b5d5390be5371a4b545fc233c019ff"
+
+[[entry]]
+filename = "C_000"
+[[entry]]
+filename = "C_001"
+[[entry]]
+filename = "C_003"
+[[entry]]
+filename = "C_010"
+[[entry]]
+filename = "C_011"
+[[entry]]
+filename = "C_013"
+[[entry]]
+filename = "C_020"
+[[entry]]
+filename = "C_021"
+[[entry]]
+filename = "C_023"
+[[entry]]
+filename = "C_030"
+[[entry]]
+filename = "C_031"
+[[entry]]
+filename = "C_033"
+[[entry]]
+filename = "C_040"
+[[entry]]
+filename = "C_041"
+[[entry]]
+filename = "C_043"
+
+[[entry]]
+filename = "MENU"
+[[entry]]
+filename = "MENUZZ"
+
+[[entry]]
+filename = "P_001"
+type = "spritesheet"
+[[entry]]
+filename = "P_003"
+type = "spritesheet"
+[[entry]]
+filename = "P_011"
+type = "spritesheet"
+[[entry]]
+filename = "P_013"
+type = "spritesheet"
+[[entry]]
+filename = "P_021"
+type = "spritesheet"
+[[entry]]
+filename = "P_023"
+type = "spritesheet"
+[[entry]]
+filename = "P_031"
+type = "spritesheet"
+[[entry]]
+filename = "P_033"
+type = "spritesheet"
+[[entry]]
+filename = "P_041"
+type = "spritesheet"
+[[entry]]
+filename = "P_043"
+type = "spritesheet"
+
+[[entry]]
+filename = "S_000"
+type = "scenario"
+[[entry]]
+filename = "S_001"
+type = "scenario"
+[[entry]]
+filename = "S_010"
+type = "scenario"
+[[entry]]
+filename = "S_011"
+type = "scenario"
+[[entry]]
+filename = "S_020"
+type = "scenario"
+[[entry]]
+filename = "S_021"
+type = "scenario"
+[[entry]]
+filename = "S_030"
+type = "scenario"
+[[entry]]
+filename = "S_031"
+type = "scenario"
+[[entry]]
+filename = "S_040"
+type = "scenario"
+[[entry]]
+filename = "S_041"
+type = "scenario"
+[[entry]]
+filename = "S_042"
+type = "scenario"
+[[entry]]
+filename = "S_043"
+type = "scenario"
+[[entry]]
+filename = "S_044"
+type = "scenario"
+
+[[entry]]
+filename = "TR000"
+type = "treasure"
+[[entry]]
+filename = "TR010"
+type = "treasure"
+[[entry]]
+filename = "TR020"
+type = "treasure"
+[[entry]]
+filename = "TR030"
+type = "treasure"
+[[entry]]
+filename = "TR040"
+type = "treasure"

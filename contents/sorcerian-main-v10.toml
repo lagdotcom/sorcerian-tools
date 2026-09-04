@@ -1,7 +1,7 @@
 [disk]
 product = "Sorcerian"
-name = "v1.1 Main Disk"
-sha1 = "93ae153e2976835ad8232a4c1492ba2e84bc7625"
+name = "Main Disk v1.0"
+sha1 = "c1843613d925be2ce2811aaa1f7ecc6185f5edd9"
 
 [listing]
 type = "dir"
@@ -12,7 +12,5 @@ size = 0x4b0
 filename = "TEXT"
 type = "image"
 format = "1bpp"
-width = 256
-height = 128
-tile_width = 16
-tile_height = 8
+size = [256, 128]
+tile_size = [16, 8]

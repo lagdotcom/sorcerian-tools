@@ -14,7 +14,7 @@ TEXT_IMG_CONTENTS = {
     0x0C: ",",
     0x0D: "-",
     0x0E: ".",
-    0x0F: "/",  # ascii version
+    0x0F: "/",
     0x10: "0",
     0x11: "1",
     0x12: "2",
