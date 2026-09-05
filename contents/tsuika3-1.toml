@@ -2,3 +2,23 @@
 product = "Sorcerian Additional Scenario Vol. 3 - Pyramid Sorcerian"
 name = "Disk 1"
 sha1 = "4b987ac039860a47f9355d36eabc0c720b0cfb45"
+
+[[entry]]
+filename = "MENU"
+type = "menu"
+
+[[entry]]
+filename = "TR200"
+type = "treasure"
+[[entry]]
+filename = "TR210"
+type = "treasure"
+[[entry]]
+filename = "TR211"
+type = "treasure"
+[[entry]]
+filename = "TR212"
+type = "treasure"
+[[entry]]
+filename = "TR220"
+type = "treasure"

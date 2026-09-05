@@ -2,3 +2,20 @@
 product = "Gilgamesh Sorcerian"
 name = "Disk 1"
 sha1 = "85a023f89c49b18c6a53133c54439fcf7d4799f6"
+
+[[entry]]
+filename = "MENU"
+type = "menu"
+
+[[entry]]
+filename = "TR100"
+type = "treasure"
+[[entry]]
+filename = "TR010"
+type = "treasure"
+[[entry]]
+filename = "TR020"
+type = "treasure"
+[[entry]]
+filename = "TR080"
+type = "treasure"

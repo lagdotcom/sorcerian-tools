@@ -2,3 +2,14 @@
 product = "Sorcerian New Scenario Vol. 1 - The Visitor from Outer Space"
 name = "Disk 2"
 sha1 = "286afc422ef8e9544d10a5be4593c54a99271178"
+
+[[entry]]
+filename = "MENU"
+type = "menu"
+
+[[entry]]
+filename = "TR040"
+type = "treasure"
+[[entry]]
+filename = "TR100"
+type = "treasure"

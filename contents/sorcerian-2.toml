@@ -2,3 +2,23 @@
 product = "Sorcerian"
 name = "Scenario 2"
 sha1 = "7fdb449f8b11a07a6588e8b5db3fdcf840c2eeb3"
+
+[[entry]]
+filename = "MENU"
+type = "menu"
+
+[[entry]]
+filename = "TR100"
+type = "treasure"
+[[entry]]
+filename = "TR110"
+type = "treasure"
+[[entry]]
+filename = "TR120"
+type = "treasure"
+[[entry]]
+filename = "TR130"
+type = "treasure"
+[[entry]]
+filename = "TR140"
+type = "treasure"

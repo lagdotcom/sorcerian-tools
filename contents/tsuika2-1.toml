@@ -2,3 +2,17 @@
 product = "Sorcerian Additional Scenario Vol. 2 - Sengoku Sorcerian"
 name = "Disk 1"
 sha1 = "2251969d8dd6364f60cf1c1f3d9236f639b5b653"
+
+[[entry]]
+filename = "MENU"
+type = "menu"
+
+[[entry]]
+filename = "TR100"
+type = "treasure"
+[[entry]]
+filename = "TR110"
+type = "treasure"
+[[entry]]
+filename = "TR120"
+type = "treasure"

@@ -2,3 +2,14 @@
 product = "Selected Sorcerian 3"
 name = "Disk 1"
 sha1 = "80d1fd3f74cd57f50f0ed3e82257bcbb43dbab5f"
+
+[[entry]]
+filename = "MENU"
+type = "menu"
+
+[[entry]]
+filename = "TR060"
+type = "treasure"
+[[entry]]
+filename = "TR090"
+type = "treasure"

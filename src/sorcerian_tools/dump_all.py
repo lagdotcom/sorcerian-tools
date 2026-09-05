@@ -1,100 +1,13 @@
 import os
-import tomllib
-from dataclasses import dataclass
-from glob import glob
 from pathlib import Path
 
-from sorcerian_tools.image import to_1bpp
-
+from .contents import get_empty_contents_toml, load_content_tomls
 from .d88tool import D88
 from .dir import Entry, get_entries, get_entry_data
 from .hash import get_all_disk_files, get_sha1
-
-type TrackSector = tuple[int, int]
-
-
-def bnnx(fn: str):
-    name, _ = os.path.splitext(os.path.basename(fn))
-    return name
-
-
-@dataclass
-class ContentsDisk:
-    product: str
-    sha1: str
-    name: str | None = None
-
-    def __str__(self) -> str:
-        if self.name:
-            return f"{self.product} ({self.name})"
-        else:
-            return self.product
-
-
-@dataclass
-class ContentsListing:
-    type: str
-    start: TrackSector = (1, 1)
-    size: int | None = None
-
-
-@dataclass
-class ContentsEntry:
-    filename: str
-    type: str
-    format: str | None = None
-    size: tuple[int, int] | None = None
-    tile_size: tuple[int, int] | None = None
-
-
-@dataclass
-class ContentsTOML:
-    toml_name: str
-    disk: ContentsDisk
-    listing: ContentsListing
-    entries: list[ContentsEntry]
-
-    @staticmethod
-    def from_toml_file(fn: str):
-        with open(fn, "r") as f:
-            data = tomllib.loads(f.read())
-
-            disk = data.get("disk", {})
-            listing = data.get("listing", {})
-            return ContentsTOML(
-                bnnx(fn),
-                ContentsDisk(
-                    disk.get("product", "UNKNOWN"),
-                    disk.get("sha1", "UNKNOWN"),
-                    disk.get("name"),
-                ),
-                ContentsListing(
-                    listing.get("type", "dir"),
-                    listing.get("start", (1, 1)),
-                    listing.get("size"),
-                ),
-                [
-                    ContentsEntry(
-                        e.get("filename", "UNKNOWN"),
-                        e.get("type", "UNKNOWN"),
-                        e.get("format"),
-                        e.get("size"),
-                        e.get("tile_size"),
-                    )
-                    for e in data.get("entry", [])
-                ],
-            )
-
-
-def load_content_tomls() -> dict[str, ContentsTOML]:
-    return {
-        toml.disk.sha1: toml
-        for toml in [
-            ContentsTOML.from_toml_file(fn)
-            for fn in glob(os.path.join("contents", "*.toml"))
-        ]
-    }
-
+from .image import to_1bpp
+from .menu import Menu
+from .treasure import Treasure
 
 if __name__ == "__main__":
     tomls = load_content_tomls()
@@ -107,12 +20,7 @@ if __name__ == "__main__":
             print(f"{fn}: {toml.disk}")
         else:
             print(f"{fn}: no hash match")
-            toml = ContentsTOML(
-                bnnx(fn),
-                ContentsDisk("UNKNOWN", "UNKNOWN", sha1),
-                ContentsListing("dir"),
-                [],
-            )
+            toml = get_empty_contents_toml(fn, sha1)
         with open(fn, "rb") as f:
             dir = out_dir / toml.toml_name
             if not dir.exists():
@@ -133,7 +41,30 @@ if __name__ == "__main__":
                     print(f"! could not find {e.filename}")
                     continue
 
-                if e.type == "image" and e.format == "1bpp":
+                if e.type == "text":
+                    ofn = dir / (e.filename + ".txt")
+                    print(f"> {ofn}", end="... ")
+                    with open(ofn, "w", encoding="utf-8") as o:
+                        o.write(get_entry_data(f, ptr).decode(e.encoding or "ascii"))
+                    print("OK")
+                elif e.type == "menu":
+                    ofn = dir / (e.filename + ".txt")
+                    print(f"> {ofn}", end="... ")
+                    with open(ofn, "w", encoding="utf-8") as o:
+                        m = Menu.from_bytes(get_entry_data(f, ptr))
+                        m.write(o)
+                    print("OK")
+                elif e.type == "treasure":
+                    ofn = dir / (e.filename + ".txt")
+                    print(f"> {ofn}", end="... ")
+                    with open(ofn, "w", encoding="utf-8") as o:
+                        o.write(Treasure.LINE_HEADER + "\n")
+                        data = get_entry_data(f, ptr)
+                        for i in range(0, len(data), 32):
+                            tr = Treasure.from_bytes(data[i : i + 32])
+                            o.write(tr.as_line() + "\n")
+                    print("OK")
+                elif e.type == "image" and e.format == "1bpp":
                     if e.size is None or e.tile_size is None:
                         print(f"! {e.filename} needs size and tile_size")
                         continue

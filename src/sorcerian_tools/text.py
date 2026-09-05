@@ -12,7 +12,7 @@ TEXT_IMG_CONTENTS = {
     0x0A: "×",
     0x0B: "+",
     0x0C: ",",
-    0x0D: "-",
+    0x0D: "-",  # sometimes this is used as 長音符
     0x0E: ".",
     0x0F: "/",
     0x10: "0",
@@ -241,3 +241,42 @@ TEXT_IMG_CONTENTS = {
     0xF7: "▟",
     0xF8: ">",
 }
+
+
+def translate(b: bytes, replace_hyphen: bool = True):
+    s = ""
+    for n in b:
+        x = TEXT_IMG_CONTENTS.get(n)
+        if x is None:
+            # print(f"? no TEXT for 0x{n:x02}")
+            s += "�"
+        else:
+            if x == "-" and replace_hyphen:
+                x = "ー"
+            s += x
+    return s
+
+
+def translate_multiline(b: bytes, sep: bytes = b"\xfd"):
+    b = b.rstrip(b"\0\xff\xfd")
+    return "\n".join([translate(t) for t in b.split(sep)])
+
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser("text", description="Translate file through TEXT")
+    parser.add_argument("filename")
+    parser.add_argument("-o", "--output", help="output file name")
+    parser.add_argument("-r", "--row", help="row size", type=int, default=16)
+    args = parser.parse_args()
+
+    with open(args.filename, "rb") as f, open(args.output, "w", encoding="utf-8") as o:
+        while True:
+            i = f.tell()
+            data = f.read(args.row)
+            if not data:
+                break
+            o.write(f"{i:4x} {translate(data)}\n")
+            if len(data) < args.row:
+                break

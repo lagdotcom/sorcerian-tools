@@ -36,8 +36,12 @@ filename = "C_043"
 
 [[entry]]
 filename = "MENU"
+type = "menu"
+
 [[entry]]
 filename = "MENUZZ"
+type = "text"
+encoding = "shift-jis"
 
 [[entry]]
 filename = "P_001"

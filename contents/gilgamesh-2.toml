@@ -1,4 +1,15 @@
 [disk]
-product = "Gilgamean Sorcerian"
+product = "Gilgamesh Sorcerian"
 name = "Disk 2"
 sha1 = "511709f2ab4f0887aca815737dc9644188e365a9"
+
+[[entry]]
+filename = "MENU"
+type = "menu"
+
+[[entry]]
+filename = "TR030"
+type = "treasure"
+[[entry]]
+filename = "TR040"
+type = "treasure"

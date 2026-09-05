@@ -1,3 +1,23 @@
 [disk]
 product = "Sorcerian Additional Scenario Vol. 1"
 sha1 = "d7a9df141548c0659c20ac99adf79cbc934829aa"
+
+[[entry]]
+filename = "MENU"
+type = "menu"
+
+[[entry]]
+filename = "TR000"
+type = "treasure"
+[[entry]]
+filename = "TR010"
+type = "treasure"
+[[entry]]
+filename = "TR020"
+type = "treasure"
+[[entry]]
+filename = "TR030"
+type = "treasure"
+[[entry]]
+filename = "TR040"
+type = "treasure"

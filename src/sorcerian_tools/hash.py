@@ -12,7 +12,8 @@ def get_sha1(fn: str):
 def get_all_disk_files():
     for root, _, files in os.walk("disks"):
         for fn in files:
-            yield os.path.join(root, fn)
+            if fn.lower().endswith(".d88"):
+                yield os.path.join(root, fn)
 
 
 if __name__ == "__main__":
