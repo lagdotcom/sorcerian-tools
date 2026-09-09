@@ -10,28 +10,28 @@ from .image import to_1bpp
 @dataclass
 class Entry:
     name: str
-    a: int
-    b: int
-    size: int
+    unknown: int
+    load: int
+    upto: int
     track: int
     record: int
     end_track: int
     end_record: int
 
-    LINE_HEADER = "NAME     ???? ???? SIZE START END"
+    LINE_HEADER = "NAME     ?? LOAD UPTO START END"
 
     @staticmethod
     def from_bytes(b: bytes):
         if b[0] == 255:
             return None
-        name, _a, _b, size, track, record, end_track, end_record = struct.unpack(
-            "<6shhhbbbb", b
+        name, unknown, load, upto, track, record, end_track, end_record = struct.unpack(
+            "<7sBHHBBBB", b
         )
         return Entry(
             name.rstrip(b"\0").decode("ascii"),
-            _a,
-            _b,
-            size,
+            unknown,
+            load,
+            upto,
             track,
             record,
             end_track,
@@ -39,7 +39,7 @@ class Entry:
         )
 
     def as_line(self):
-        return f"{self.name:8} {self.a:4x} {self.b:4x} {self.size:4x} {self.track:2} {self.record:2} {self.end_track:2} {self.end_record:2}"
+        return f"{self.name:8} {self.unknown:2x} {self.load:4x} {self.upto:4x} {self.track:2} {self.record:2} {self.end_track:2} {self.end_record:2}"
 
 
 def get_entries(f: BinaryIO, track_no: int = 1):
@@ -59,7 +59,7 @@ def get_entries(f: BinaryIO, track_no: int = 1):
 def get_entry_data(f: BinaryIO, entry: Entry):
     data = b""
     d88 = D88(f)
-    remaining = entry.size + 1
+    remaining = (entry.upto + 1) - entry.load
     i = d88.get_sector_index(entry.track, entry.record)
     if i is None:
         raise ValueError(f"T{entry.track} S{entry.record} does not exist")
@@ -97,7 +97,7 @@ if __name__ == "__main__":
         if args.list:
             for e in entries.values():
                 print(
-                    f"{e.name:8} {e.a:4x} {e.b:4x} {e.size:4x} {e.track:2} {e.record:2} {e.end_track:2} {e.end_record:2}"
+                    f"{e.name:8} {e.unknown:4x} {e.load:4x} {e.upto:4x} {e.track:2} {e.record:2} {e.end_track:2} {e.end_record:2}"
                 )
 
         if args.extract:

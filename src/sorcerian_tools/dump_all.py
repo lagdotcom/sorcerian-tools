@@ -5,7 +5,7 @@ from .contents import get_empty_contents_toml, load_content_tomls
 from .d88tool import D88
 from .dir import Entry, get_entries, get_entry_data
 from .hash import get_all_disk_files, get_sha1
-from .image import to_1bpp
+from .image import to_1bpp, to_planar_fmt
 from .menu import Menu
 from .treasure import Treasure
 
@@ -41,21 +41,19 @@ if __name__ == "__main__":
                     print(f"! could not find {e.filename}")
                     continue
 
+                ofn = dir / e.get_write_filename()
                 if e.type == "text":
-                    ofn = dir / (e.filename + ".txt")
                     print(f"> {ofn}", end="... ")
                     with open(ofn, "w", encoding="utf-8") as o:
                         o.write(get_entry_data(f, ptr).decode(e.encoding or "ascii"))
                     print("OK")
                 elif e.type == "menu":
-                    ofn = dir / (e.filename + ".txt")
                     print(f"> {ofn}", end="... ")
                     with open(ofn, "w", encoding="utf-8") as o:
                         m = Menu.from_bytes(get_entry_data(f, ptr))
                         m.write(o)
                     print("OK")
                 elif e.type == "treasure":
-                    ofn = dir / (e.filename + ".txt")
                     print(f"> {ofn}", end="... ")
                     with open(ofn, "w", encoding="utf-8") as o:
                         o.write(Treasure.LINE_HEADER + "\n")
@@ -74,12 +72,16 @@ if __name__ == "__main__":
                         e.tile_size[0],
                         e.tile_size[1],
                     )
-                    ifn = dir / (e.filename + ".png")
-                    print(f"> {ifn}", end="... ")
-                    img.save(ifn)
+                    print(f"> {ofn}", end="... ")
+                    img.save(ofn)
+                    print("OK")
+                elif e.type == "image" and e.format == "planar":
+                    raw = get_entry_data(f, ptr)
+                    img = to_planar_fmt(get_entry_data(f, ptr))
+                    print(f"> {ofn}", end="... ")
+                    img.save(ofn)
                     print("OK")
                 else:
-                    ofn = dir / (e.filename + ".bin")
                     print(f"> {ofn}", end="... ")
                     with open(ofn, "wb") as o:
                         o.write(get_entry_data(f, ptr))

@@ -226,7 +226,7 @@ TEXT_IMG_CONTENTS = {
     0xE1: "、",
     0xE2: "「",
     0xE3: "」",
-    0xE4: "／",
+    0xE4: "🖊️",  # used when typing name
     0xE5: "・",
     0xE6: "ヴ",
     0xE7: "(Yes",

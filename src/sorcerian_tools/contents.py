@@ -3,7 +3,7 @@ import tomllib
 from dataclasses import dataclass
 from glob import glob
 
-from .common import TrackSector, bnnx
+from .common import TrackSector, basename_no_ext
 
 
 @dataclass
@@ -34,6 +34,16 @@ class ContentsEntry:
     size: tuple[int, int] | None = None
     tile_size: tuple[int, int] | None = None
     encoding: str | None = None
+    write_as: str | None = None
+
+    def get_write_filename(self):
+        if self.write_as:
+            return self.write_as
+        if self.type == "text" or self.type == "menu" or self.type == "treasure":
+            return self.filename + ".txt"
+        if self.type == "image":
+            return self.filename + ".png"
+        return self.filename + ".bin"
 
 
 @dataclass
@@ -51,7 +61,7 @@ class ContentsTOML:
             disk = data.get("disk", {})
             listing = data.get("listing", {})
             return ContentsTOML(
-                bnnx(fn),
+                basename_no_ext(fn),
                 ContentsDisk(
                     disk.get("product", "UNKNOWN"),
                     disk.get("sha1", "UNKNOWN"),
@@ -70,6 +80,7 @@ class ContentsTOML:
                         e.get("size"),
                         e.get("tile_size"),
                         e.get("encoding"),
+                        e.get("write_as"),
                     )
                     for e in data.get("entry", [])
                 ],
@@ -88,7 +99,7 @@ def load_content_tomls() -> dict[str, ContentsTOML]:
 
 def get_empty_contents_toml(fn: str, sha1: str):
     return ContentsTOML(
-        bnnx(fn),
+        basename_no_ext(fn),
         ContentsDisk("UNKNOWN", "UNKNOWN", sha1),
         ContentsListing("dir"),
         [],

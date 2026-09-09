@@ -45,34 +45,24 @@ encoding = "shift-jis"
 
 [[entry]]
 filename = "P_001"
-type = "spritesheet"
 [[entry]]
 filename = "P_003"
-type = "spritesheet"
 [[entry]]
 filename = "P_011"
-type = "spritesheet"
 [[entry]]
 filename = "P_013"
-type = "spritesheet"
 [[entry]]
 filename = "P_021"
-type = "spritesheet"
 [[entry]]
 filename = "P_023"
-type = "spritesheet"
 [[entry]]
 filename = "P_031"
-type = "spritesheet"
 [[entry]]
 filename = "P_033"
-type = "spritesheet"
 [[entry]]
 filename = "P_041"
-type = "spritesheet"
 [[entry]]
 filename = "P_043"
-type = "spritesheet"
 
 [[entry]]
 filename = "S_000"

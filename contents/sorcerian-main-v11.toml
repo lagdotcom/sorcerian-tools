@@ -9,6 +9,54 @@ start = [1, 1]
 size = 0x4b0
 
 [[entry]]
+filename = "      "
+type = "code"
+write_as = "KERNEL.bin"
+
+[[entry]]
+filename = "MOGI1"
+type = "image"
+format = "planar"
+size = [640, 152]
+[[entry]]
+filename = "MOGI2"
+type = "image"
+format = "planar"
+size = [640, 152]
+[[entry]]
+filename = "TAIT1"
+type = "image"
+format = "planar"
+size = [640, 152]
+[[entry]]
+filename = "TAIT2"
+type = "image"
+format = "planar"
+size = [640, 152]
+
+[[entry]]
+filename = "PRNO0"
+type = "code"
+[[entry]]
+filename = "PRNO1"
+type = "code"
+[[entry]]
+filename = "PRNO2"
+type = "code"
+[[entry]]
+filename = "PRNO3"
+type = "code"
+[[entry]]
+filename = "PRNO4"
+type = "code"
+[[entry]]
+filename = "PRNO6"
+type = "code"
+[[entry]]
+filename = "PRNO7"
+type = "code"
+
+[[entry]]
 filename = "TEXT"
 type = "image"
 format = "1bpp"
