@@ -2,6 +2,7 @@ import os
 import tomllib
 from dataclasses import dataclass
 from glob import glob
+from typing import Any
 
 from .common import TrackSector, basename_no_ext
 
@@ -27,6 +28,18 @@ class ContentsListing:
 
 
 @dataclass
+class ImagePatterns:
+    filename: str
+    offset: int
+    count: int
+    mode: str
+
+    @staticmethod
+    def from_dict(e: dict[Any, Any]):
+        return ImagePatterns(e["filename"], e["offset"], e["count"], e["mode"])
+
+
+@dataclass
 class ContentsEntry:
     filename: str
     type: str
@@ -35,6 +48,7 @@ class ContentsEntry:
     tile_size: tuple[int, int] | None = None
     encoding: str | None = None
     write_as: str | None = None
+    patterns: ImagePatterns | None = None
 
     def get_write_filename(self):
         if self.write_as:
@@ -44,6 +58,23 @@ class ContentsEntry:
         if self.type == "image":
             return self.filename + ".png"
         return self.filename + ".bin"
+
+    @staticmethod
+    def from_dict(e: dict[Any, Any]):
+        patterns = None
+        if "patterns" in e:
+            patterns = ImagePatterns.from_dict(e["patterns"])
+
+        return ContentsEntry(
+            e.get("filename", "UNKNOWN"),
+            e.get("type", "UNKNOWN"),
+            e.get("format"),
+            e.get("size"),
+            e.get("tile_size"),
+            e.get("encoding"),
+            e.get("write_as"),
+            patterns,
+        )
 
 
 @dataclass
@@ -72,18 +103,7 @@ class ContentsTOML:
                     listing.get("start", (1, 1)),
                     listing.get("size"),
                 ),
-                [
-                    ContentsEntry(
-                        e.get("filename", "UNKNOWN"),
-                        e.get("type", "UNKNOWN"),
-                        e.get("format"),
-                        e.get("size"),
-                        e.get("tile_size"),
-                        e.get("encoding"),
-                        e.get("write_as"),
-                    )
-                    for e in data.get("entry", [])
-                ],
+                [ContentsEntry.from_dict(e) for e in data.get("entry", [])],
             )
 
 

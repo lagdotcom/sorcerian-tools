@@ -12,6 +12,7 @@ size = 0x4b0
 filename = "      "
 type = "code"
 write_as = "KERNEL.bin"
+mount = 0
 
 [[entry]]
 filename = "MOGI1"
@@ -37,24 +38,31 @@ size = [640, 152]
 [[entry]]
 filename = "PRNO0"
 type = "code"
+mount = 0x1000
 [[entry]]
 filename = "PRNO1"
 type = "code"
+mount = 0x1000
 [[entry]]
 filename = "PRNO2"
 type = "code"
+mount = 0x1000
 [[entry]]
 filename = "PRNO3"
 type = "code"
+mount = 0x1000
 [[entry]]
 filename = "PRNO4"
 type = "code"
+mount = 0x1000
 [[entry]]
 filename = "PRNO6"
 type = "code"
+mount = 0x1000
 [[entry]]
 filename = "PRNO7"
 type = "code"
+mount = 0x1000
 
 [[entry]]
 filename = "TEXT"
@@ -62,3 +70,200 @@ type = "image"
 format = "1bpp"
 size = [256, 128]
 tile_size = [16, 8]
+
+[[entry]]
+filename = "PLPTR"
+mount = 0xa000
+
+[[entry]]
+filename = "CH000"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x000, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH001"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x040, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH002"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x080, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH010"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x100, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH011"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x140, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH012"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x180, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH100"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x200, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH101"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x240, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH102"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x280, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH110"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x300, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH111"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x340, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH112"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x380, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH200"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x400, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH201"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x440, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH202"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x480, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH210"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x500, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH211"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x540, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH212"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x580, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH300"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x600, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH301"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x640, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH302"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x680, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH310"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x700, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH311"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x740, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400
+[[entry]]
+filename = "CH312"
+type = "image"
+format = "sprite"
+patterns = { filename = "PLPTR", offset = 0x780, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+mount = 0x5400

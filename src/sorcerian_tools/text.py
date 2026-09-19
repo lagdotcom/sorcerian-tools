@@ -272,6 +272,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     with open(args.filename, "rb") as f, open(args.output, "w", encoding="utf-8") as o:
+        print(f"Writing {args.output}...", end=" ")
         while True:
             i = f.tell()
             data = f.read(args.row)
@@ -280,3 +281,4 @@ if __name__ == "__main__":
             o.write(f"{i:4x} {translate(data)}\n")
             if len(data) < args.row:
                 break
+        print("OK")

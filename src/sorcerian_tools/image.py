@@ -3,6 +3,8 @@ from ctypes import c_ushort as u16
 
 from PIL import Image
 
+from .contents import ImagePatterns
+
 
 class BitIO:
     def __init__(self, data: bytes):
@@ -77,6 +79,7 @@ def to_planar_fmt(
     palette: Palette = DEFAULT_PALETTE,
     height_scale: int = DEFAULT_HEIGHT_SCALE,
 ):
+    # TODO convert this into actual python
     raw = list(orig)
 
     # u0 = int.from_bytes(raw[0:2], "little")
@@ -284,3 +287,108 @@ def to_planar_fmt(
                     data.extend(row)
             img.putdata(data)  # type: ignore
             return img
+
+
+class SpriteMode:
+    def __init__(self, order: list[tuple[int, int]]):
+        self.order = order
+        self.width = 1
+        self.height = 1
+        for x, y in order:
+            if x >= self.width:
+                self.width = x + 1
+            if y >= self.height:
+                self.height = y + 1
+
+
+SPRITE_MODES = {"2x3": SpriteMode([(0, 2), (0, 1), (0, 0), (1, 0), (1, 1), (1, 2)])}
+
+
+def to_sprite_fmt(
+    data: bytes,
+    w: int,
+    h: int,
+    tile_width: int,
+    tile_height: int,
+    pattern_info: tuple[ImagePatterns, bytes] | None = None,
+    height_scale: int = DEFAULT_HEIGHT_SCALE,
+):
+    palette = DEFAULT_PALETTE
+    parsed_palette = [n for rgb in palette for n in rgb]
+    tiles_per_row = w // tile_width
+    tile_rows = h // tile_height
+    p = tile_width * tile_height // 8
+
+    tiles: list[Image.Image] = []
+
+    i = 0
+    for _ in range(tile_rows):
+        for _ in range(tiles_per_row):
+            bb = BitIO(data[i : i + p])
+            rb = BitIO(data[i + p : i + p * 2])
+            gb = BitIO(data[i + p * 2 : i + p * 3])
+            i += p * 4
+
+            m = Image.new("P", (tile_width, tile_height * height_scale))
+            m.putpalette(parsed_palette)  # type: ignore
+            tiles.append(m)
+            m_data: list[int] = []
+            for _ in range(tile_height):
+                for _ in range(tile_width):
+                    b = bb.next_bit()
+                    r = rb.next_bit()
+                    g = gb.next_bit()
+
+                    ix = 0
+                    if b:
+                        ix += 1
+                    if r:
+                        ix += 2
+                    if g:
+                        ix += 4
+
+                    m_data.append(ix)
+
+                for _ in range(height_scale - 1):
+                    m_data.extend(m_data[-tile_width:])
+
+            m.putdata(m_data)  # type: ignore
+
+    if pattern_info:
+        patterns, pat_data = pattern_info
+        mode = SPRITE_MODES.get(patterns.mode)
+        if mode is None:
+            raise ValueError(f"unknown sprite pattern mode: {patterns.mode}")
+        pat_width = mode.width * tile_width
+        pat_height = mode.height * tile_height * height_scale
+        img = Image.new("P", (pat_width, pat_height * patterns.count))
+        img.putpalette(parsed_palette)  # type: ignore
+        i = patterns.offset
+        x = 0
+        y = 0
+        for _ in range(patterns.count):
+            for c, r in mode.order:
+                n = pat_data[i]
+                i += 1
+                dx = x + c * tile_width
+                dy = y + r * tile_height * height_scale
+                # print(f"{n} at {dx},{dy}")
+                img.paste(tiles[n], (dx, dy))
+            # print(f"pattern {pn}: {si} to {ei}")
+            y += pat_height
+
+    else:
+        img = Image.new("P", (w, h * height_scale))
+        img.putpalette(parsed_palette)  # type: ignore
+
+        i = 0
+        y = 0
+        for _ in range(tile_rows):
+            x = 0
+            for _ in range(tiles_per_row):
+                img.paste(tiles[i], (x, y))
+                i += 1
+                x += tile_width
+            y += tile_height * height_scale
+
+    return img

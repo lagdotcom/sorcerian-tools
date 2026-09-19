@@ -18,7 +18,7 @@ class Entry:
     end_track: int
     end_record: int
 
-    LINE_HEADER = "NAME     ?? LOAD UPTO START END"
+    LINE_HEADER = "NAME     ?? LOAD UPTO START END  "
 
     @staticmethod
     def from_bytes(b: bytes):

@@ -5,7 +5,7 @@ from .contents import get_empty_contents_toml, load_content_tomls
 from .d88tool import D88
 from .dir import Entry, get_entries, get_entry_data
 from .hash import get_all_disk_files, get_sha1
-from .image import to_1bpp, to_planar_fmt
+from .image import to_1bpp, to_planar_fmt, to_sprite_fmt
 from .menu import Menu
 from .treasure import Treasure
 
@@ -13,6 +13,7 @@ if __name__ == "__main__":
     tomls = load_content_tomls()
     d88s = list(get_all_disk_files())
     out_dir = Path("out")
+    complete_listing = dict[str, dict[str, Entry]]()
     for fn in d88s:
         sha1 = get_sha1(fn)
         toml = tomls.get(sha1)
@@ -34,6 +35,7 @@ if __name__ == "__main__":
                 o.write(Entry.LINE_HEADER + "\n")
                 o.writelines([e.as_line() + "\n" for e in listing.values()])
             print("OK")
+            complete_listing[fn] = listing
 
             for e in toml.entries:
                 ptr = listing.get(e.filename)
@@ -76,8 +78,31 @@ if __name__ == "__main__":
                     img.save(ofn)
                     print("OK")
                 elif e.type == "image" and e.format == "planar":
-                    raw = get_entry_data(f, ptr)
                     img = to_planar_fmt(get_entry_data(f, ptr))
+                    print(f"> {ofn}", end="... ")
+                    img.save(ofn)
+                    print("OK")
+                elif e.type == "image" and e.format == "sprite":
+                    if e.size is None or e.tile_size is None:
+                        print(f"! {e.filename} needs size and tile_size")
+                        continue
+                    patterns = None
+                    if e.patterns:
+                        pat_file = listing.get(e.patterns.filename)
+                        if pat_file is None:
+                            print(
+                                f"! {e.filename} needs pattern file {e.patterns.filename}, not found"
+                            )
+                            continue
+                        patterns = (e.patterns, get_entry_data(f, pat_file))
+                    img = to_sprite_fmt(
+                        get_entry_data(f, ptr),
+                        e.size[0],
+                        e.size[1],
+                        e.tile_size[0],
+                        e.tile_size[1],
+                        patterns,
+                    )
                     print(f"> {ofn}", end="... ")
                     img.save(ofn)
                     print("OK")
@@ -86,3 +111,11 @@ if __name__ == "__main__":
                     with open(ofn, "wb") as o:
                         o.write(get_entry_data(f, ptr))
                     print("OK")
+
+    ofn = out_dir / "complete_listing.txt"
+    print(f"> {ofn}", end="... ")
+    with open(ofn, "w") as o:
+        o.write(f"{Entry.LINE_HEADER} SOURCE FILE\n")
+        for fn, listing in complete_listing.items():
+            o.writelines([f"{e.as_line()} {fn}\n" for e in listing.values()])
+    print("OK")
