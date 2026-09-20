@@ -16,3 +16,25 @@ type = "treasure"
 [[entry]]
 filename = "TR120"
 type = "treasure"
+
+[[entry]]
+filename = "NC100"
+type = "image"
+format = "sprite"
+patterns = { filename = "NP100", offset = 0x90, base = 0x60, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]
+[[entry]]
+filename = "NC110"
+type = "image"
+format = "sprite"
+# patterns = { filename = "NP110", offset = 0x90, base = 0x60, count = 12, mode = "2x2" }
+size = [32, 128]
+tile_size = [16, 8]
+[[entry]]
+filename = "NC120"
+type = "image"
+format = "sprite"
+patterns = { filename = "NP120", offset = 0x90, base = 0x60, count = 8, mode = "2x3" }
+size = [32, 128]
+tile_size = [16, 8]

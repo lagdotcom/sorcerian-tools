@@ -51,9 +51,9 @@ The v1.0 and v1.1 disks are very similar. `PRNO1` and `PRNO4` are different size
 - `MA###`
 - `MENU`
 - `MENUZZ`: MS-DOS batch file?
-- `NC###`
+- `NC###`: guest character graphics (same as `CH###`)
 - `ND###`
-- `NP###`
+- `NP###`: guest character graphic patterns (same as `PLPTR`)
 - `P_###`
 - `PRNO#`
 - `S_###`

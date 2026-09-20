@@ -33,10 +33,17 @@ class ImagePatterns:
     offset: int
     count: int
     mode: str
+    base: int
 
     @staticmethod
     def from_dict(e: dict[Any, Any]):
-        return ImagePatterns(e["filename"], e["offset"], e["count"], e["mode"])
+        return ImagePatterns(
+            e["filename"],
+            e.get("offset", 0),
+            e.get("count", 0),
+            e["mode"],
+            e.get("base", 0),
+        )
 
 
 @dataclass

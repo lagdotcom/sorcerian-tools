@@ -1,7 +1,7 @@
 from ctypes import c_ubyte as u8
 from ctypes import c_ushort as u16
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from .contents import ImagePatterns
 
@@ -290,18 +290,28 @@ def to_planar_fmt(
 
 
 class SpriteMode:
-    def __init__(self, order: list[tuple[int, int]]):
-        self.order = order
-        self.width = 1
-        self.height = 1
-        for x, y in order:
-            if x >= self.width:
-                self.width = x + 1
-            if y >= self.height:
-                self.height = y + 1
+    def __init__(self, w: int, h: int):
+        self.width = w
+        self.height = h
+        self.order = list[tuple[int, int]]()
+        step = -1
+        for x in range(w):
+            for y in range(h)[::step]:
+                self.order.append((x, y))
+            step = -step
 
 
-SPRITE_MODES = {"2x3": SpriteMode([(0, 2), (0, 1), (0, 0), (1, 0), (1, 1), (1, 2)])}
+SPRITE_MODES = {
+    "1x1": SpriteMode(1, 1),
+    "2x2": SpriteMode(2, 2),
+    "2x3": SpriteMode(2, 3),
+    "3x2": SpriteMode(3, 2),
+    "1x2": SpriteMode(1, 2),
+    "3x1": SpriteMode(3, 1),
+    "6x6": SpriteMode(6, 6),
+}
+
+SPRITE_MODE_INDICES = ["1x1", "2x2", "2x3", "3x2", "1x2", "3x1"]
 
 
 def to_sprite_fmt(
@@ -309,15 +319,16 @@ def to_sprite_fmt(
     w: int,
     h: int,
     tile_width: int,
-    tile_height: int,
+    tile_height_base: int,
     pattern_info: tuple[ImagePatterns, bytes] | None = None,
     height_scale: int = DEFAULT_HEIGHT_SCALE,
 ):
     palette = DEFAULT_PALETTE
     parsed_palette = [n for rgb in palette for n in rgb]
     tiles_per_row = w // tile_width
-    tile_rows = h // tile_height
-    p = tile_width * tile_height // 8
+    tile_rows = h // tile_height_base
+    p = tile_width * tile_height_base // 8
+    tile_height = tile_height_base * height_scale
 
     tiles: list[Image.Image] = []
 
@@ -329,11 +340,11 @@ def to_sprite_fmt(
             gb = BitIO(data[i + p * 2 : i + p * 3])
             i += p * 4
 
-            m = Image.new("P", (tile_width, tile_height * height_scale))
+            m = Image.new("P", (tile_width, tile_height))
             m.putpalette(parsed_palette)  # type: ignore
             tiles.append(m)
             m_data: list[int] = []
-            for _ in range(tile_height):
+            for _ in range(tile_height_base):
                 for _ in range(tile_width):
                     b = bb.next_bit()
                     r = rb.next_bit()
@@ -356,26 +367,79 @@ def to_sprite_fmt(
 
     if pattern_info:
         patterns, pat_data = pattern_info
-        mode = SPRITE_MODES.get(patterns.mode)
-        if mode is None:
-            raise ValueError(f"unknown sprite pattern mode: {patterns.mode}")
-        pat_width = mode.width * tile_width
-        pat_height = mode.height * tile_height * height_scale
-        img = Image.new("P", (pat_width, pat_height * patterns.count))
-        img.putpalette(parsed_palette)  # type: ignore
-        i = patterns.offset
-        x = 0
-        y = 0
-        for _ in range(patterns.count):
-            for c, r in mode.order:
-                n = pat_data[i]
+
+        if patterns.mode == "multi":
+            pat_images: list[Image.Image] = []
+            big_mode = False
+            total_width = 0
+            total_height = 0
+            i = 0
+            while i < len(pat_data):
+                mode_byte = pat_data[i]
                 i += 1
-                dx = x + c * tile_width
-                dy = y + r * tile_height * height_scale
-                # print(f"{n} at {dx},{dy}")
-                img.paste(tiles[n], (dx, dy))
-            # print(f"pattern {pn}: {si} to {ei}")
-            y += pat_height
+                if mode_byte == 6 or big_mode:
+                    big_mode = True
+                    indices = pat_data[i : i + 36]
+                    mode = SPRITE_MODES["6x6"]
+                    i += 63
+                else:
+                    indices = pat_data[i : i + 6]
+                    mode = SPRITE_MODES[SPRITE_MODE_INDICES[mode_byte]]
+                    i += 7
+
+                pat_img = Image.new(
+                    "P",
+                    (mode.width * tile_width, mode.height * tile_height),
+                )
+                total_width = max(total_width, pat_img.width)
+                total_height += pat_img.height
+                pat_img.putpalette(parsed_palette)  # type: ignore
+                pat_images.append(pat_img)
+
+                # print(f"-- {mode_byte} {mode} {indices}")
+                for j, (c, r) in enumerate(mode.order):
+                    n = indices[j]
+                    # print(f"pat: {j} {c} {r}")
+                    if n != 0xFF:
+                        n_value = n - patterns.base
+                        if n_value >= 0 and n_value < len(tiles):
+                            pat_img.paste(
+                                tiles[n_value], (c * tile_width, r * tile_height)
+                            )
+
+            img = Image.new("P", (total_width + 16, total_height))
+            img.putpalette(parsed_palette)  # type: ignore
+            dr = ImageDraw.Draw(img)
+            y = 0
+            for pi, pat_img in enumerate(pat_images):
+                dr.text((0, y), str(pi), fill=(255, 255, 255))
+                img.paste(pat_img, (16, y))
+                y += pat_img.height
+        else:
+            mode = SPRITE_MODES.get(patterns.mode)
+            if mode is None:
+                raise ValueError(f"unknown sprite pattern mode: {patterns.mode}")
+            pat_width = mode.width * tile_width
+            pat_height = mode.height * tile_height
+            img = Image.new("P", (pat_width, pat_height * patterns.count))
+            img.putpalette(parsed_palette)  # type: ignore
+            i = patterns.offset
+            x = 0
+            y = 0
+            # print(patterns, pat_data.hex())
+            for _ in range(patterns.count):
+                for c, r in mode.order:
+                    n = pat_data[i]
+                    i += 1
+                    if n != 0xFF:
+                        dx = x + c * tile_width
+                        dy = y + r * tile_height
+                        n_value = n - patterns.base
+                        # print(f"{n_value} at {dx},{dy}")
+                        if n_value >= 0 and n_value < len(tiles):
+                            img.paste(tiles[n_value], (dx, dy))
+                # print(f"pattern {pn}: {si} to {ei}")
+                y += pat_height
 
     else:
         img = Image.new("P", (w, h * height_scale))
@@ -389,6 +453,6 @@ def to_sprite_fmt(
                 img.paste(tiles[i], (x, y))
                 i += 1
                 x += tile_width
-            y += tile_height * height_scale
+            y += tile_height
 
     return img

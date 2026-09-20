@@ -15,67 +15,6 @@ write_as = "KERNEL.bin"
 mount = 0
 
 [[entry]]
-filename = "MOGI1"
-type = "image"
-format = "planar"
-size = [640, 152]
-[[entry]]
-filename = "MOGI2"
-type = "image"
-format = "planar"
-size = [640, 152]
-[[entry]]
-filename = "TAIT1"
-type = "image"
-format = "planar"
-size = [640, 152]
-[[entry]]
-filename = "TAIT2"
-type = "image"
-format = "planar"
-size = [640, 152]
-
-[[entry]]
-filename = "PRNO0"
-type = "code"
-mount = 0x1000
-[[entry]]
-filename = "PRNO1"
-type = "code"
-mount = 0x1000
-[[entry]]
-filename = "PRNO2"
-type = "code"
-mount = 0x1000
-[[entry]]
-filename = "PRNO3"
-type = "code"
-mount = 0x1000
-[[entry]]
-filename = "PRNO4"
-type = "code"
-mount = 0x1000
-[[entry]]
-filename = "PRNO6"
-type = "code"
-mount = 0x1000
-[[entry]]
-filename = "PRNO7"
-type = "code"
-mount = 0x1000
-
-[[entry]]
-filename = "TEXT"
-type = "image"
-format = "1bpp"
-size = [256, 128]
-tile_size = [16, 8]
-
-[[entry]]
-filename = "PLPTR"
-mount = 0xa000
-
-[[entry]]
 filename = "CH000"
 type = "image"
 format = "sprite"
@@ -267,3 +206,160 @@ patterns = { filename = "PLPTR", offset = 0x780, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
 mount = 0x5400
+
+[[entry]]
+filename = "C_003"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_003", base = 0xa0, mode = "multi" }
+size = [64, 192]
+tile_size = [16, 8]
+[[entry]]
+filename = "C_013"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_013", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+[[entry]]
+filename = "C_023"
+type = "image"
+format = "sprite"
+# patterns = { filename = "P_023", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+[[entry]]
+filename = "C_033"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_033", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+[[entry]]
+filename = "C_250"
+type = "image"
+format = "sprite"
+size = [128, 128]
+tile_size = [16, 8]
+[[entry]]
+filename = "C_251"
+type = "image"
+format = "sprite"
+size = [128, 128]
+tile_size = [16, 8]
+[[entry]]
+filename = "C_600"
+type = "image"
+format = "sprite"
+size = [32, 128]
+tile_size = [16, 8]
+[[entry]]
+filename = "C_990"
+[[entry]]
+filename = "C_991"
+[[entry]]
+filename = "C_992"
+[[entry]]
+filename = "C_999"
+
+[[entry]]
+filename = "ENDTX"
+
+[[entry]]
+filename = "MA001"
+[[entry]]
+filename = "MA011"
+[[entry]]
+filename = "MA021"
+[[entry]]
+filename = "MA031"
+
+[[entry]]
+filename = "MOGI1"
+type = "image"
+format = "planar"
+size = [640, 152]
+[[entry]]
+filename = "MOGI2"
+type = "image"
+format = "planar"
+size = [640, 152]
+
+[[entry]]
+filename = "M_250"
+[[entry]]
+filename = "M_999"
+
+[[entry]]
+filename = "PLPTR"
+mount = 0xa000
+
+[[entry]]
+filename = "PRNO0"
+type = "code"
+mount = 0x1000
+[[entry]]
+filename = "PRNO1"
+type = "code"
+mount = 0x1000
+[[entry]]
+filename = "PRNO2"
+type = "code"
+mount = 0x1000
+[[entry]]
+filename = "PRNO3"
+type = "code"
+mount = 0x1000
+[[entry]]
+filename = "PRNO4"
+type = "code"
+mount = 0x1000
+[[entry]]
+filename = "PRNO6"
+type = "code"
+mount = 0x1000
+[[entry]]
+filename = "PRNO7"
+type = "code"
+mount = 0x1000
+
+[[entry]]
+filename = "SS005"
+[[entry]]
+filename = "SS011"
+[[entry]]
+filename = "SS018"
+[[entry]]
+filename = "SS020"
+[[entry]]
+filename = "SS026"
+[[entry]]
+filename = "SS040"
+[[entry]]
+filename = "SS043"
+[[entry]]
+filename = "SS061"
+[[entry]]
+filename = "SS062"
+[[entry]]
+filename = "SS091"
+[[entry]]
+filename = "SS098"
+
+[[entry]]
+filename = "TAIT1"
+type = "image"
+format = "planar"
+size = [640, 152]
+[[entry]]
+filename = "TAIT2"
+type = "image"
+format = "planar"
+size = [640, 152]
+
+[[entry]]
+filename = "TEXT"
+type = "image"
+format = "1bpp"
+size = [256, 128]
+tile_size = [16, 8]
