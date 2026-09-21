@@ -56,6 +56,7 @@ class ContentsEntry:
     encoding: str | None = None
     write_as: str | None = None
     patterns: ImagePatterns | None = None
+    has_mask: bool = True
 
     def get_write_filename(self):
         if self.write_as:
@@ -81,6 +82,7 @@ class ContentsEntry:
             e.get("encoding"),
             e.get("write_as"),
             patterns,
+            e.get("has_mask", True),
         )
 
 

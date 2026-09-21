@@ -8,18 +8,23 @@ The v1.0 and v1.1 disks are very similar. `PRNO1` and `PRNO4` are different size
 
 - `      `: Z80 code; loader for the game
 - `CH###`: character graphics; first number = race, second = gender, third = age category
-- `C_###`
+- `C_###`: various graphics
+  - `C_0#3`: boss graphics? have some BIG sprites
+  - `C_25#`: a dragon? cave?
+  - `C_600`: effects
+  - `C_990`, `C_991`, `C_992`: portraits?
+  - `C_999`: town graphics
 - `ENDTX`
 - `MA###`
 - `MOGI1`, `MOGI2`: planar image; text intro
 - `M_###`
-- `PLPTR`: character graphic patterns
+- `PLPTR`: patterns for `CH###`
 - `PRNO#`: Z80 code; split into sections
   - `PRNO0`: title screen?
   - `PRNO1`: main menu
   - `PRNO2`: exploration
   - `PRNO3`: town
-- `P_###`
+- `P_###`: patterns for `C_###`
 - `SS###`
 - `TAIT1`, `TAIT2`: planar image; Sorcerian logo
 - `TEXT`: mono image; font

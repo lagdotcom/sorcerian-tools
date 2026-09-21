@@ -65,15 +65,7 @@ if __name__ == "__main__":
                             o.write(tr.as_line() + "\n")
                     print("OK")
                 elif e.type == "image" and e.format == "1bpp":
-                    if e.size is None or e.tile_size is None:
-                        print(f"! {e.filename} needs size and tile_size")
-                        continue
-                    img = to_1bpp(
-                        get_entry_data(f, ptr),
-                        e.size[0],
-                        e.tile_size[0],
-                        e.tile_size[1],
-                    )
+                    img = to_1bpp(get_entry_data(f, ptr), e)
                     print(f"> {ofn}", end="... ")
                     img.save(ofn)
                     print("OK")
@@ -83,10 +75,7 @@ if __name__ == "__main__":
                     img.save(ofn)
                     print("OK")
                 elif e.type == "image" and e.format == "sprite":
-                    if e.size is None or e.tile_size is None:
-                        print(f"! {e.filename} needs size and tile_size")
-                        continue
-                    patterns = None
+                    pat_data = None
                     if e.patterns:
                         pat_file = listing.get(e.patterns.filename)
                         if pat_file is None:
@@ -94,15 +83,8 @@ if __name__ == "__main__":
                                 f"! {e.filename} needs pattern file {e.patterns.filename}, not found"
                             )
                             continue
-                        patterns = (e.patterns, get_entry_data(f, pat_file))
-                    img = to_sprite_fmt(
-                        get_entry_data(f, ptr),
-                        e.size[0],
-                        e.size[1],
-                        e.tile_size[0],
-                        e.tile_size[1],
-                        patterns,
-                    )
+                        pat_data = get_entry_data(f, pat_file)
+                    img = to_sprite_fmt(get_entry_data(f, ptr), e, pat_data)
                     print(f"> {ofn}", end="... ")
                     img.save(ofn)
                     print("OK")

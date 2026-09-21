@@ -21,7 +21,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x000, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH001"
 type = "image"
@@ -29,7 +29,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x040, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH002"
 type = "image"
@@ -37,7 +37,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x080, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH010"
 type = "image"
@@ -45,7 +45,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x100, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH011"
 type = "image"
@@ -53,7 +53,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x140, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH012"
 type = "image"
@@ -61,7 +61,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x180, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH100"
 type = "image"
@@ -69,7 +69,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x200, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH101"
 type = "image"
@@ -77,7 +77,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x240, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH102"
 type = "image"
@@ -85,7 +85,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x280, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH110"
 type = "image"
@@ -93,7 +93,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x300, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH111"
 type = "image"
@@ -101,7 +101,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x340, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH112"
 type = "image"
@@ -109,7 +109,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x380, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH200"
 type = "image"
@@ -117,7 +117,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x400, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH201"
 type = "image"
@@ -125,7 +125,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x440, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH202"
 type = "image"
@@ -133,7 +133,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x480, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH210"
 type = "image"
@@ -141,7 +141,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x500, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH211"
 type = "image"
@@ -149,7 +149,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x540, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH212"
 type = "image"
@@ -157,7 +157,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x580, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH300"
 type = "image"
@@ -165,7 +165,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x600, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH301"
 type = "image"
@@ -173,7 +173,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x640, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH302"
 type = "image"
@@ -181,7 +181,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x680, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH310"
 type = "image"
@@ -189,7 +189,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x700, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH311"
 type = "image"
@@ -197,7 +197,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x740, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 [[entry]]
 filename = "CH312"
 type = "image"
@@ -205,7 +205,7 @@ format = "sprite"
 patterns = { filename = "PLPTR", offset = 0x780, count = 8, mode = "2x3" }
 size = [32, 128]
 tile_size = [16, 8]
-mount = 0x5400
+mount = 0xc000
 
 [[entry]]
 filename = "C_003"
@@ -214,6 +214,7 @@ format = "sprite"
 patterns = { filename = "P_003", base = 0xa0, mode = "multi" }
 size = [64, 192]
 tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_013"
 type = "image"
@@ -221,6 +222,7 @@ format = "sprite"
 patterns = { filename = "P_013", base = 0xa0, mode = "multi" }
 size = [96, 128]
 tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_023"
 type = "image"
@@ -228,6 +230,7 @@ format = "sprite"
 patterns = { filename = "P_023", base = 0xa0, mode = "multi" }
 size = [96, 128]
 tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_033"
 type = "image"
@@ -235,6 +238,7 @@ format = "sprite"
 patterns = { filename = "P_033", base = 0xa0, mode = "multi" }
 size = [96, 128]
 tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_250"
 type = "image"
@@ -255,15 +259,46 @@ size = [32, 128]
 tile_size = [16, 8]
 [[entry]]
 filename = "C_990"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_990", count = 16, mode = "8x8" }
+size = [256, 128]
+tile_size = [16, 8]
+has_mask = false
+mount = 0xc000
 [[entry]]
 filename = "C_991"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_991", count = 16, mode = "8x8" }
+size = [256, 128]
+tile_size = [16, 8]
+has_mask = false
+mount = 0xc000
 [[entry]]
 filename = "C_992"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_992", count = 16, mode = "8x8" }
+size = [256, 128]
+tile_size = [16, 8]
+has_mask = false
+mount = 0xc000
 [[entry]]
 filename = "C_999"
+type = "image"
+format = "sprite"
+size = [256, 96]
+tile_size = [16, 8]
+mount = 0xc000
 
 [[entry]]
+TODO = "this also contains data after the font?"
 filename = "ENDTX"
+type = "image"
+format = "1bpp"
+size = [256, 72]
+tile_size = [16, 12]
 
 [[entry]]
 filename = "MA001"
