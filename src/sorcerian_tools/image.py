@@ -290,22 +290,25 @@ def to_planar_fmt(
 
 
 class SpriteMode:
-    def __init__(self, w: int, h: int):
+    def __init__(self, w: int, h: int, order: list[tuple[int, int]] | None = None):
         self.width = w
         self.height = h
-        self.order = list[tuple[int, int]]()
-        step = -1
-        for x in range(w):
-            for y in range(h)[::step]:
-                self.order.append((x, y))
-            step = -step
+        if order:
+            self.order = order
+        else:
+            self.order = list[tuple[int, int]]()
+            step = -1
+            for x in range(w):
+                for y in range(h)[::step]:
+                    self.order.append((x, y))
+                step = -step
 
 
 SPRITE_MODES = {
     "1x1": SpriteMode(1, 1),
     "2x2": SpriteMode(2, 2),
     "2x3": SpriteMode(2, 3),
-    "3x2": SpriteMode(3, 2),
+    "3x2": SpriteMode(3, 2, [(0, 1), (1, 1), (2, 1), (2, 0), (1, 0), (0, 0)]),
     "1x2": SpriteMode(1, 2),
     "3x1": SpriteMode(3, 1),
     "6x6": SpriteMode(6, 6),

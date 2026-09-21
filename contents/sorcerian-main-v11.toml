@@ -225,7 +225,7 @@ tile_size = [16, 8]
 filename = "C_023"
 type = "image"
 format = "sprite"
-# patterns = { filename = "P_023", base = 0xa0, mode = "multi" }
+patterns = { filename = "P_023", base = 0xa0, mode = "multi" }
 size = [96, 128]
 tile_size = [16, 8]
 [[entry]]
