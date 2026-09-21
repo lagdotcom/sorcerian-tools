@@ -34,6 +34,7 @@ class ImagePatterns:
     count: int
     mode: str
     base: int
+    allow_ff: bool
 
     @staticmethod
     def from_dict(e: dict[Any, Any]):
@@ -43,7 +44,14 @@ class ImagePatterns:
             e.get("count", 0),
             e["mode"],
             e.get("base", 0),
+            e.get("allow_ff", False),
         )
+
+    def is_valid(self, n: int, tiles: list[Any]):
+        if n == 0xFF and not self.allow_ff:
+            return False
+        n_value = n - self.base
+        return n_value >= 0 and n_value < len(tiles)
 
 
 @dataclass

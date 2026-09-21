@@ -31,7 +31,7 @@ def to_1bpp(
     height_scale: int = DEFAULT_HEIGHT_SCALE,
 ):
     if e.size is None or e.tile_size is None:
-        raise ValueError(f"! {e.filename} needs size and tile_size")
+        raise ValueError(f"{e.filename} needs size and tile_size")
 
     w, h = e.size
     tile_width, tile_height = e.tile_size
@@ -310,11 +310,11 @@ class SpriteMode:
 
 
 SPRITE_MODES = {
-    "1x1": SpriteMode(1, 1, [(0, 0)]),
+    "1x1": SpriteMode(1, 1),
     "2x2": SpriteMode(2, 2),
     "2x3": SpriteMode(2, 3),
     "3x2": SpriteMode(3, 2, [(0, 1), (1, 1), (2, 1), (2, 0), (1, 0), (0, 0)]),
-    "1x2": SpriteMode(1, 2, [(0, 0), (1, 0)]),
+    "1x2": SpriteMode(1, 2),
     "3x1": SpriteMode(3, 1),
     "6x6": SpriteMode(6, 6),
     "8x8": SpriteMode(8, 8),
@@ -331,7 +331,7 @@ def to_sprite_fmt(
     height_scale: int = DEFAULT_HEIGHT_SCALE,
 ):
     if e.size is None or e.tile_size is None:
-        raise ValueError(f"! {e.filename} needs size and tile_size")
+        raise ValueError(f"{e.filename} needs size and tile_size")
 
     w, h = e.size
     tile_width, tile_height_base = e.tile_size
@@ -406,13 +406,13 @@ def to_sprite_fmt(
                 pat_img.putpalette(parsed_palette)  # type: ignore
                 pat_images.append(pat_img)
 
-                # print(f"-- {mode_byte} {mode} {indices}")
                 for j, (c, r) in enumerate(mode.order):
                     n = indices[j]
-                    # print(f"pat: {j} {c} {r}")
-                    n_value = n - e.patterns.base
-                    if n_value >= 0 and n_value < len(tiles):
-                        pat_img.paste(tiles[n_value], (c * tile_width, r * tile_height))
+                    if e.patterns.is_valid(n, tiles):
+                        pat_img.paste(
+                            tiles[n - e.patterns.base],
+                            (c * tile_width, r * tile_height),
+                        )
 
             img = Image.new("P", (total_width + 16, total_height))
             img.putpalette(parsed_palette)  # type: ignore
@@ -433,18 +433,14 @@ def to_sprite_fmt(
             i = e.patterns.offset
             x = 0
             y = 0
-            # print(patterns, pat_data.hex())
             for _ in range(e.patterns.count):
                 for c, r in mode.order:
                     n = pat_data[i]
                     i += 1
                     dx = x + c * tile_width
                     dy = y + r * tile_height
-                    n_value = n - e.patterns.base
-                    # print(f"{n_value} at {dx},{dy}")
-                    if n_value >= 0 and n_value < len(tiles):
-                        img.paste(tiles[n_value], (dx, dy))
-                # print(f"pattern {pn}: {si} to {ei}")
+                    if e.patterns.is_valid(n, tiles):
+                        img.paste(tiles[n - e.patterns.base], (dx, dy))
                 y += pat_height
 
     else:

@@ -261,7 +261,7 @@ tile_size = [16, 8]
 filename = "C_990"
 type = "image"
 format = "sprite"
-patterns = { filename = "P_990", count = 16, mode = "8x8" }
+patterns = { filename = "P_990", count = 16, mode = "8x8", allow_ff = true }
 size = [256, 128]
 tile_size = [16, 8]
 has_mask = false
@@ -270,7 +270,7 @@ mount = 0xc000
 filename = "C_991"
 type = "image"
 format = "sprite"
-patterns = { filename = "P_991", count = 16, mode = "8x8" }
+patterns = { filename = "P_991", count = 16, mode = "8x8", allow_ff = true }
 size = [256, 128]
 tile_size = [16, 8]
 has_mask = false
@@ -279,7 +279,7 @@ mount = 0xc000
 filename = "C_992"
 type = "image"
 format = "sprite"
-patterns = { filename = "P_992", count = 16, mode = "8x8" }
+patterns = { filename = "P_992", count = 16, mode = "8x8", allow_ff = true }
 size = [256, 128]
 tile_size = [16, 8]
 has_mask = false
