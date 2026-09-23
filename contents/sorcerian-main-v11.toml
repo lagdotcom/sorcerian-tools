@@ -251,11 +251,13 @@ type = "image"
 format = "sprite"
 size = [128, 128]
 tile_size = [16, 8]
+mount = 0x8000
 [[entry]]
 filename = "C_600"
 type = "image"
 format = "sprite"
-size = [32, 128]
+# patterns = { filename = "C_600", base = 0x60, count = 256, mode = "1x1" }
+size = [64, 64]
 tile_size = [16, 8]
 [[entry]]
 filename = "C_990"
@@ -299,15 +301,20 @@ type = "image"
 format = "1bpp"
 size = [256, 72]
 tile_size = [16, 12]
+mount = 0xc000
 
 [[entry]]
 filename = "MA001"
+mount = 0x4c00
 [[entry]]
 filename = "MA011"
+mount = 0x4c00
 [[entry]]
 filename = "MA021"
+mount = 0x4c00
 [[entry]]
 filename = "MA031"
+mount = 0x4c00
 
 [[entry]]
 filename = "MOGI1"
@@ -322,6 +329,7 @@ size = [640, 152]
 
 [[entry]]
 filename = "M_250"
+mount = 0x5800
 [[entry]]
 filename = "M_999"
 

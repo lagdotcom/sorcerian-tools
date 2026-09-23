@@ -5,34 +5,114 @@ sha1 = "2abcfcda58b5d5390be5371a4b545fc233c019ff"
 
 [[entry]]
 filename = "C_000"
+type = "image"
+format = "sprite"
+size = [128, 128]
+tile_size = [16, 8]
 [[entry]]
 filename = "C_001"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_001", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_003"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_003", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_010"
+type = "image"
+format = "sprite"
+size = [128, 128]
+tile_size = [16, 8]
 [[entry]]
 filename = "C_011"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_011", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_013"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_013", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_020"
+type = "image"
+format = "sprite"
+size = [128, 128]
+tile_size = [16, 8]
 [[entry]]
 filename = "C_021"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_021", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_023"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_023", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_030"
+type = "image"
+format = "sprite"
+size = [128, 128]
+tile_size = [16, 8]
 [[entry]]
 filename = "C_031"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_031", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_033"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_033", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_040"
+type = "image"
+format = "sprite"
+size = [128, 128]
+tile_size = [16, 8]
 [[entry]]
 filename = "C_041"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_041", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+mount = 0xe800
 [[entry]]
 filename = "C_043"
+type = "image"
+format = "sprite"
+patterns = { filename = "P_043", base = 0xa0, mode = "multi" }
+size = [96, 128]
+tile_size = [16, 8]
+mount = 0xe800
 
 [[entry]]
 filename = "MENU"
@@ -44,25 +124,60 @@ type = "text"
 encoding = "shift-jis"
 
 [[entry]]
-filename = "P_001"
+filename = "M_250"
+mount = 0x5800
 [[entry]]
-filename = "P_003"
+filename = "M_251"
+mount = 0x5800
+
 [[entry]]
-filename = "P_011"
+filename = "SS001"
 [[entry]]
-filename = "P_013"
+filename = "SS005"
 [[entry]]
-filename = "P_021"
+filename = "SS006"
 [[entry]]
-filename = "P_023"
+filename = "SS010"
 [[entry]]
-filename = "P_031"
+filename = "SS011"
 [[entry]]
-filename = "P_033"
+filename = "SS016"
 [[entry]]
-filename = "P_041"
+filename = "SS017"
 [[entry]]
-filename = "P_043"
+filename = "SS026"
+[[entry]]
+filename = "SS027"
+[[entry]]
+filename = "SS029"
+[[entry]]
+filename = "SS037"
+[[entry]]
+filename = "SS041"
+[[entry]]
+filename = "SS049"
+[[entry]]
+filename = "SS054"
+[[entry]]
+filename = "SS055"
+[[entry]]
+filename = "SS058"
+[[entry]]
+filename = "SS060"
+[[entry]]
+filename = "SS081"
+[[entry]]
+filename = "SS082"
+[[entry]]
+filename = "SS085"
+[[entry]]
+filename = "SS087"
+[[entry]]
+filename = "SS088"
+[[entry]]
+filename = "SS090"
+[[entry]]
+filename = "SS099"
 
 [[entry]]
 filename = "S_000"

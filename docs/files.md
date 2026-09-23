@@ -14,8 +14,8 @@ The v1.0 and v1.1 disks are very similar. `PRNO1` and `PRNO4` are different size
   - `C_600`: effects
   - `C_990`, `C_991`, `C_992`: portraits?
   - `C_999`: town graphics
-- `ENDTX`
-- `MA###`
+- `ENDTX`: ending text graphics + #TODO
+- `MA###`: #TODO, loads alongside a `C_`/`P_` pair
 - `MOGI1`, `MOGI2`: planar image; text intro
 - `M_###`
 - `PLPTR`: patterns for `CH###`
@@ -25,7 +25,7 @@ The v1.0 and v1.1 disks are very similar. `PRNO1` and `PRNO4` are different size
   - `PRNO2`: exploration
   - `PRNO3`: town
 - `P_###`: patterns for `C_###`
-- `SS###`
+- `SS###`: music
 - `TAIT1`, `TAIT2`: planar image; Sorcerian logo
 - `TEXT`: mono image; font
 
