@@ -240,6 +240,8 @@ TEXT_IMG_CONTENTS = {
     0xF6: "▄",
     0xF7: "▟",
     0xF8: ">",
+    0xFD: "<NL>",
+    0xFE: "<ATTR>",
 }
 
 
@@ -260,6 +262,23 @@ def translate(b: bytes, replace_hyphen: bool = True):
 def translate_multiline(b: bytes, sep: bytes = b"\xfd"):
     b = b.rstrip(b"\0\xff\xfd")
     return "\n".join([translate(t) for t in b.split(sep)])
+
+
+def translate_until_eof(b: bytes):
+    s = ""
+    i = 0
+    while i < len(b):
+        n = b[i]
+        i += 1
+        if n == 0xFF:
+            break
+        if n == 0xFE:
+            arg = b[i]
+            i += 1
+            s += f"<ATTR {arg:02x}>"
+        else:
+            s += TEXT_IMG_CONTENTS.get(n, f"<{n:02x}>")
+    return s
 
 
 if __name__ == "__main__":

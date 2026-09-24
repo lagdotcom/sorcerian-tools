@@ -54,10 +54,14 @@ class ImagePatterns:
         return n_value >= 0 and n_value < len(tiles)
 
 
+TEXT_TYPES = {"text", "menu", "scenario", "treasure"}
+
+
 @dataclass
 class ContentsEntry:
     filename: str
     type: str
+    mount: int | None = None
     format: str | None = None
     size: tuple[int, int] | None = None
     tile_size: tuple[int, int] | None = None
@@ -69,7 +73,7 @@ class ContentsEntry:
     def get_write_filename(self):
         if self.write_as:
             return self.write_as
-        if self.type == "text" or self.type == "menu" or self.type == "treasure":
+        if self.type in TEXT_TYPES:
             return self.filename + ".txt"
         if self.type == "image":
             return self.filename + ".png"
@@ -84,6 +88,7 @@ class ContentsEntry:
         return ContentsEntry(
             e.get("filename", "UNKNOWN"),
             e.get("type", "UNKNOWN"),
+            e.get("mount"),
             e.get("format"),
             e.get("size"),
             e.get("tile_size"),

@@ -7,6 +7,7 @@ from .dir import Entry, get_entries, get_entry_data
 from .hash import get_all_disk_files, get_sha1
 from .image import to_1bpp, to_planar_fmt, to_sprite_fmt
 from .menu import Menu
+from .scenario import Scenario
 from .treasure import Treasure
 
 if __name__ == "__main__":
@@ -54,6 +55,14 @@ if __name__ == "__main__":
                     with open(ofn, "w", encoding="utf-8") as o:
                         m = Menu.from_bytes(get_entry_data(f, ptr))
                         m.write(o)
+                    print("OK")
+                elif e.type == "scenario":
+                    print(f"> {ofn}", end="... ")
+                    with open(ofn, "w", encoding="utf-8") as o:
+                        s = Scenario.from_bytes(
+                            get_entry_data(f, ptr), e.mount or 0x7600
+                        )
+                        s.write(o)
                     print("OK")
                 elif e.type == "treasure":
                     print(f"> {ofn}", end="... ")

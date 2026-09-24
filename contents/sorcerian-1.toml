@@ -115,6 +115,27 @@ tile_size = [16, 8]
 mount = 0xe800
 
 [[entry]]
+filename = "MA000"
+[[entry]]
+filename = "MA001"
+[[entry]]
+filename = "MA010"
+[[entry]]
+filename = "MA011"
+[[entry]]
+filename = "MA020"
+[[entry]]
+filename = "MA021"
+[[entry]]
+filename = "MA030"
+[[entry]]
+filename = "MA031"
+[[entry]]
+filename = "MA040"
+[[entry]]
+filename = "MA041"
+
+[[entry]]
 filename = "MENU"
 type = "menu"
 
@@ -123,6 +144,82 @@ filename = "MENUZZ"
 type = "text"
 encoding = "shift-jis"
 
+[[entry]]
+filename = "M_000"
+[[entry]]
+filename = "M_001"
+[[entry]]
+filename = "M_002"
+[[entry]]
+filename = "M_003"
+[[entry]]
+filename = "M_004"
+[[entry]]
+filename = "M_005"
+[[entry]]
+filename = "M_006"
+[[entry]]
+filename = "M_010"
+[[entry]]
+filename = "M_011"
+[[entry]]
+filename = "M_012"
+[[entry]]
+filename = "M_013"
+[[entry]]
+filename = "M_014"
+[[entry]]
+filename = "M_015"
+[[entry]]
+filename = "M_016"
+[[entry]]
+filename = "M_017"
+[[entry]]
+filename = "M_020"
+[[entry]]
+filename = "M_021"
+[[entry]]
+filename = "M_022"
+[[entry]]
+filename = "M_023"
+[[entry]]
+filename = "M_024"
+[[entry]]
+filename = "M_025"
+[[entry]]
+filename = "M_030"
+[[entry]]
+filename = "M_031"
+[[entry]]
+filename = "M_032"
+[[entry]]
+filename = "M_033"
+[[entry]]
+filename = "M_034"
+[[entry]]
+filename = "M_035"
+[[entry]]
+filename = "M_036"
+[[entry]]
+filename = "M_040"
+[[entry]]
+filename = "M_041"
+[[entry]]
+filename = "M_042"
+[[entry]]
+filename = "M_043"
+[[entry]]
+filename = "M_044"
+[[entry]]
+filename = "M_045"
+[[entry]]
+filename = "M_046"
+[[entry]]
+filename = "M_047"
+[[entry]]
+filename = "M_048"
+[[entry]]
+filename = "M_049"
 [[entry]]
 filename = "M_250"
 mount = 0x5800
@@ -182,42 +279,55 @@ filename = "SS099"
 [[entry]]
 filename = "S_000"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_001"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_010"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_011"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_020"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_021"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_030"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_031"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_040"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_041"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_042"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_043"
 type = "scenario"
+mount = 0x7600
 [[entry]]
 filename = "S_044"
 type = "scenario"
+mount = 0x7600
 
 [[entry]]
 filename = "TR000"

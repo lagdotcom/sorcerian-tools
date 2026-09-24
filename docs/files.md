@@ -52,7 +52,7 @@ The v1.0 and v1.1 disks are very similar. `PRNO1` and `PRNO4` are different size
 
 - `C_##?`, `C_###P`
 - `END##`
-- `M_###`
+- `M_###`: map files?
 - `MA###`
 - `MENU`
 - `MENUZZ`: MS-DOS batch file?
@@ -61,7 +61,7 @@ The v1.0 and v1.1 disks are very similar. `PRNO1` and `PRNO4` are different size
 - `NP###`: guest character graphic patterns (same as `PLPTR`)
 - `P_###`
 - `PRNO#`
-- `S_###`
+- `S_###`: scenario scripts
 - `SS###`
 - `TR###`: treasure data
 
