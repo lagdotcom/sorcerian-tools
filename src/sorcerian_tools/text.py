@@ -240,6 +240,8 @@ TEXT_IMG_CONTENTS = {
     0xF6: "▄",
     0xF7: "▟",
     0xF8: ">",
+    0xFB: "<OPEN>",
+    0xFC: "<CLOSE>",
     0xFD: "<NL>",
     0xFE: "<ATTR>",
 }

@@ -1,4 +1,5 @@
 from collections import deque
+from collections.abc import Callable
 from dataclasses import dataclass
 from struct import unpack
 from typing import TextIO
@@ -19,7 +20,7 @@ HERB_NAMES = ["verbena", "lavender", "sage", "hyssop", "savoury"]
 
 
 @dataclass
-class OpArg:
+class ArgType:
     name: str
     type: str
     size: int
@@ -43,123 +44,112 @@ class OpArg:
             return str(value)
 
 
-arg_byte = OpArg("unknown", "unknown", 1)
-arg_area = OpArg("area", "area", 1)
-arg_code = OpArg("op", "code", 1)
-arg_flag = OpArg("flag", "flag", 1)
-arg_herb = OpArg("herb", "herb", 1)
-arg_word = OpArg("unknown", "unknown", 2)
-arg_ref = OpArg("unknown", "unknown", 2, True)
-arg_text = OpArg("text", "text", 2, True)
+arg_byte = ArgType("unknown", "unknown", 1)
+arg_area = ArgType("area", "area", 1)
+arg_code = ArgType("op", "code", 1)
+arg_flag = ArgType("flag", "flag", 1)
+arg_herb = ArgType("herb", "herb", 1)
+arg_word = ArgType("unknown", "unknown", 2)
+arg_ref = ArgType("unknown", "unknown", 2, True)
+arg_text = ArgType("text", "text", 2, True)
 
 
 @dataclass
-class ScriptOp:
+class OpType:
     name: str
     code: int
-    args: list[OpArg]
+    args: list[ArgType]
     keep_going: bool = True
 
 
 @dataclass
 class Op:
-    op: ScriptOp
+    type: OpType
     values: list[int]
 
     def format(self, base: int, raw: bytes, names: dict[int, str]):
         values = [
             arg.format(self.values[i], base, raw, names)
-            for i, arg in enumerate(self.op.args)
+            for i, arg in enumerate(self.type.args)
         ]
-        return f"{self.op.name} {' '.join(values)}"
+        return f"{self.type.name} {' '.join(values)}"
 
 
 CHECK_OPS = {
-    0x00: ScriptOp("end", 0, [], False),
-    0x01: ScriptOp("if", 1, [arg_ref, arg_code, arg_byte]),
-    0x02: ScriptOp("if.is_set", 2, [arg_flag]),
-    0x03: ScriptOp("if.is_clear", 3, [arg_flag]),
-    0x04: ScriptOp("if.at_tile", 4, [arg_byte]),
-    0x05: ScriptOp("if.entered", 5, []),
+    0x00: OpType("end", 0, [], keep_going=False),
+    0x01: OpType("if", 1, [arg_ref, arg_code, arg_byte]),
+    0x02: OpType("if.is_set", 2, [arg_flag]),
+    0x03: OpType("if.is_clear", 3, [arg_flag]),
+    0x04: OpType("if.at_tile", 4, [arg_byte]),
+    0x05: OpType("if.entered", 5, []),
 }
 
-EOF_OP = ScriptOp("!!eof", -1, [], False)
 
-
-def get_next_check_op(raw: bytes, offset: int):
-    if len(raw) <= offset:
-        op = EOF_OP
-    else:
-        op_byte = raw[offset]
-        offset += 1
-        op = (
-            ScriptOp(f"if.at {(op_byte - 0x80)},", 1, [arg_byte])
-            if op_byte & 0x80
-            else CHECK_OPS.get(op_byte)
-        )
-        if op is None:
-            op = ScriptOp(f"unknown_{op_byte:02x}", op_byte, [])
-    values = list[int]()
-    for arg in op.args:
-        value = int.from_bytes(raw[offset : offset + arg.size], "little")
-        values.append(value)
-        offset += arg.size
-    check = Op(op, values)
-    return check, offset, op.keep_going
+def get_check_op(n: int):
+    return (
+        OpType(f"if.at {(n - 0x80)},", 1, [arg_byte]) if n & 0x80 else CHECK_OPS.get(n)
+    )
 
 
 APPLY_OPS = {
-    0x00: ScriptOp("end", 0, [], False),
-    0x01: ScriptOp("say", 1, [arg_text]),
-    0x02: ScriptOp("warp", 2, [arg_byte, arg_area, arg_byte, arg_byte]),
-    0x03: ScriptOp("store", 3, [arg_ref, arg_code, arg_byte]),
-    0x04: ScriptOp("load_script", 4, [arg_word, arg_word]),
-    0x05: ScriptOp("trap?", 5, [arg_byte, arg_byte]),
-    0x06: ScriptOp("continue?", 6, [arg_byte]),
-    0x07: ScriptOp("call", 7, [arg_word]),
-    0x08: ScriptOp("change_tiles", 8, [arg_byte, arg_byte]),
-    0x09: ScriptOp("music", 9, [arg_byte]),
-    0x0A: ScriptOp("finish_adventure", 10, []),
-    0x0B: ScriptOp("op_0b", 11, []),
-    0x0C: ScriptOp("take", 12, [arg_byte]),
-    0x0D: ScriptOp("drop", 13, [arg_byte]),
-    0x0E: ScriptOp("clear_flag", 14, [arg_flag]),
-    0x0F: ScriptOp("set_flag", 15, [arg_flag]),
-    0x10: ScriptOp("redraw", 16, []),
-    0x11: ScriptOp("op_11", 17, [arg_byte]),
-    0x12: ScriptOp("open", 18, [arg_ref]),
-    0x13: ScriptOp("close", 19, [arg_ref]),
-    0x14: ScriptOp("spawn", 20, [arg_byte, arg_byte]),
-    0x15: ScriptOp("get_herb", 21, [arg_herb]),
-    0x16: ScriptOp("experience", 22, [arg_word]),
-    0x17: ScriptOp("gold", 23, [arg_byte, arg_text]),
-    0x18: ScriptOp("scroll", 24, [arg_byte]),
-    0x19: ScriptOp("wait_for_key", 25, []),
-    0x1A: ScriptOp("wait", 26, [arg_byte]),
-    0x1B: ScriptOp("op_1b", 27, []),
-    0x1C: ScriptOp("op_1c", 28, []),
-    0x1D: ScriptOp("confirm", 29, []),
-    0x1E: ScriptOp("goto", 30, [arg_ref], False),
-    0x1F: ScriptOp("nop", 31, []),
+    0x00: OpType("end", 0, [], keep_going=False),
+    0x01: OpType("say", 1, [arg_text]),
+    0x02: OpType("warp", 2, [arg_byte, arg_area, arg_byte, arg_byte]),
+    0x03: OpType("store", 3, [arg_ref, arg_code, arg_byte]),
+    0x04: OpType("load_script", 4, [arg_word, arg_word]),
+    0x05: OpType("trap?", 5, [arg_byte, arg_byte]),
+    0x06: OpType("continue?", 6, [arg_byte]),
+    0x07: OpType("call", 7, [arg_word]),
+    0x08: OpType("change_tiles", 8, [arg_byte, arg_byte]),
+    0x09: OpType("music", 9, [arg_byte]),
+    0x0A: OpType("finish_adventure", 10, []),
+    0x0B: OpType("op_0b", 11, [arg_byte]),
+    0x0C: OpType("take", 12, [arg_byte]),
+    0x0D: OpType("drop", 13, [arg_byte]),
+    0x0E: OpType("clear_flag", 14, [arg_flag]),
+    0x0F: OpType("set_flag", 15, [arg_flag]),
+    0x10: OpType("redraw", 16, []),
+    0x11: OpType("op_11", 17, [arg_byte]),
+    0x12: OpType("open", 18, [arg_ref]),
+    0x13: OpType("close", 19, [arg_ref]),
+    0x14: OpType("spawn", 20, [arg_byte, arg_byte]),
+    0x15: OpType("get_herb", 21, [arg_herb]),
+    0x16: OpType("experience", 22, [arg_word]),
+    0x17: OpType("gold", 23, [arg_byte, arg_byte]),
+    0x18: OpType("scroll", 24, [arg_byte]),
+    0x19: OpType("wait_for_key", 25, []),
+    0x1A: OpType("wait", 26, [arg_byte]),
+    0x1B: OpType("op_1b", 27, []),
+    0x1C: OpType("op_1c", 28, []),
+    0x1D: OpType("confirm", 29, []),
+    0x1E: OpType("goto", 30, [arg_ref], keep_going=False),
+    0x1F: OpType("nop", 31, []),
 }
 
 
-def get_next_apply_op(raw: bytes, offset: int):
+def get_apply_op(n: int):
+    return APPLY_OPS.get(n)
+
+
+EOF_OP = OpType("!!eof", -1, [], keep_going=False)
+
+
+def get_next_op(raw: bytes, offset: int, getter: Callable[[int], OpType | None]):
     if len(raw) <= offset:
-        op = EOF_OP
+        type = EOF_OP
     else:
         op_byte = raw[offset]
         offset += 1
-        op = APPLY_OPS.get(op_byte)
-        if op is None:
-            op = ScriptOp(f"unknown_{op_byte:02x}", op_byte, [])
+        type = getter(op_byte) or OpType(
+            f"unknown_{op_byte:02x}", op_byte, [], keep_going=False
+        )
     values = list[int]()
-    for arg in op.args:
+    for arg in type.args:
         value = int.from_bytes(raw[offset : offset + arg.size], "little")
         values.append(value)
         offset += arg.size
-    apply = Op(op, values)
-    return apply, offset, op.keep_going
+    op = Op(type, values)
+    return op, offset, type.keep_going
 
 
 SCRIPT_NAMES = ["left", "right", "down", "up"]
@@ -249,12 +239,12 @@ class Scenario:
 
                 run = True
                 while run:
-                    op, offset, run = get_next_check_op(self.raw, offset)
-                    if op.op.code != 0:
+                    op, offset, run = get_next_op(self.raw, offset, get_check_op)
+                    if op.type.code != 0:
                         o.write(f"  {op.format(self.base, self.raw, self.names)}\n")
 
                 run = True
                 while run:
-                    op, offset, run = get_next_apply_op(self.raw, offset)
-                    if op.op.code != 0:
+                    op, offset, run = get_next_op(self.raw, offset, get_apply_op)
+                    if op.type.code != 0:
                         o.write(f"  {op.format(self.base, self.raw, self.names)}\n")
