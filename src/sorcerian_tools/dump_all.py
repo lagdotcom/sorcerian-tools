@@ -1,14 +1,37 @@
 import os
 from pathlib import Path
+from typing import BinaryIO
 
-from .contents import get_empty_contents_toml, load_content_tomls
+from .contents import ContentsEntry, get_empty_contents_toml, load_content_tomls
 from .d88tool import D88
 from .dir import Entry, get_entries, get_entry_data
 from .hash import get_all_disk_files, get_sha1
 from .image import to_1bpp, to_planar_fmt, to_sprite_fmt
+from .map import render_map_raw
 from .menu import Menu
 from .scenario import Scenario
 from .treasure import Treasure
+
+
+def load_image(f: BinaryIO, ptr: Entry, e: ContentsEntry):
+    if e.format == "1bpp":
+        return to_1bpp(get_entry_data(f, ptr), e)
+    elif e.format == "planar":
+        return to_planar_fmt(get_entry_data(f, ptr))
+    elif e.format == "sprite":
+        pat_data = None
+        if e.patterns:
+            pat_file = listing.get(e.patterns.filename)
+            if pat_file is None:
+                print(
+                    f"! {e.filename} needs pattern file {e.patterns.filename}, not found"
+                )
+            else:
+                pat_data = get_entry_data(f, pat_file)
+        return to_sprite_fmt(get_entry_data(f, ptr), e, pat_data)
+    else:
+        raise ValueError(f"unknown image format: {e.format}")
+
 
 if __name__ == "__main__":
     tomls = load_content_tomls()
@@ -50,6 +73,25 @@ if __name__ == "__main__":
                     with open(ofn, "w", encoding="utf-8") as o:
                         o.write(get_entry_data(f, ptr).decode(e.encoding or "ascii"))
                     print("OK")
+                elif e.type == "map":
+                    print(f"> {ofn}", end="... ")
+                    tile_data = None
+                    if e.tiles is not None:
+                        tile_ptr = listing.get(e.tiles)
+                        tile_e = toml.get_entry(e.tiles)
+                        if tile_ptr is None:
+                            print(
+                                f"! {e.filename} needs tile file {e.tiles}, not found"
+                            )
+                        elif tile_e is None:
+                            print(
+                                f"! {toml.toml_name} does not have entry for {e.tiles}"
+                            )
+                        else:
+                            tile_data = tile_e, load_image(f, tile_ptr, tile_e)
+                    img = render_map_raw(get_entry_data(f, ptr), tile_data)
+                    img.save(ofn)
+                    print("OK")
                 elif e.type == "menu":
                     print(f"> {ofn}", end="... ")
                     with open(ofn, "w", encoding="utf-8") as o:
@@ -73,28 +115,9 @@ if __name__ == "__main__":
                             tr = Treasure.from_bytes(data[i : i + 32])
                             o.write(tr.as_line() + "\n")
                     print("OK")
-                elif e.type == "image" and e.format == "1bpp":
-                    img = to_1bpp(get_entry_data(f, ptr), e)
+                elif e.type == "image":
                     print(f"> {ofn}", end="... ")
-                    img.save(ofn)
-                    print("OK")
-                elif e.type == "image" and e.format == "planar":
-                    img = to_planar_fmt(get_entry_data(f, ptr))
-                    print(f"> {ofn}", end="... ")
-                    img.save(ofn)
-                    print("OK")
-                elif e.type == "image" and e.format == "sprite":
-                    pat_data = None
-                    if e.patterns:
-                        pat_file = listing.get(e.patterns.filename)
-                        if pat_file is None:
-                            print(
-                                f"! {e.filename} needs pattern file {e.patterns.filename}, not found"
-                            )
-                            continue
-                        pat_data = get_entry_data(f, pat_file)
-                    img = to_sprite_fmt(get_entry_data(f, ptr), e, pat_data)
-                    print(f"> {ofn}", end="... ")
+                    img = load_image(f, ptr, e)
                     img.save(ofn)
                     print("OK")
                 else:

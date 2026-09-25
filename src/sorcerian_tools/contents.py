@@ -55,6 +55,7 @@ class ImagePatterns:
 
 
 TEXT_TYPES = {"text", "menu", "scenario", "treasure"}
+IMAGE_TYPES = {"image", "map"}
 
 
 @dataclass
@@ -68,6 +69,7 @@ class ContentsEntry:
     encoding: str | None = None
     write_as: str | None = None
     patterns: ImagePatterns | None = None
+    tiles: str | None = None
     has_mask: bool = True
 
     def get_write_filename(self):
@@ -75,7 +77,7 @@ class ContentsEntry:
             return self.write_as
         if self.type in TEXT_TYPES:
             return self.filename + ".txt"
-        if self.type == "image":
+        if self.type in IMAGE_TYPES:
             return self.filename + ".png"
         return self.filename + ".bin"
 
@@ -86,16 +88,17 @@ class ContentsEntry:
             patterns = ImagePatterns.from_dict(e["patterns"])
 
         return ContentsEntry(
-            e.get("filename", "UNKNOWN"),
-            e.get("type", "UNKNOWN"),
-            e.get("mount"),
-            e.get("format"),
-            e.get("size"),
-            e.get("tile_size"),
-            e.get("encoding"),
-            e.get("write_as"),
-            patterns,
-            e.get("has_mask", True),
+            filename=e.get("filename", "UNKNOWN"),
+            type=e.get("type", "UNKNOWN"),
+            mount=e.get("mount"),
+            format=e.get("format"),
+            size=e.get("size"),
+            tile_size=e.get("tile_size"),
+            encoding=e.get("encoding"),
+            write_as=e.get("write_as"),
+            patterns=patterns,
+            tiles=e.get("tiles"),
+            has_mask=e.get("has_mask", True),
         )
 
 
@@ -127,6 +130,11 @@ class ContentsTOML:
                 ),
                 [ContentsEntry.from_dict(e) for e in data.get("entry", [])],
             )
+
+    def get_entry(self, filename: str):
+        for e in self.entries:
+            if e.filename == filename:
+                return e
 
 
 def load_content_tomls() -> dict[str, ContentsTOML]:

@@ -146,85 +146,165 @@ encoding = "shift-jis"
 
 [[entry]]
 filename = "M_000"
+type = "map"
+tiles = "C_000"
 [[entry]]
 filename = "M_001"
+type = "map"
+tiles = "C_000"
 [[entry]]
 filename = "M_002"
+type = "map"
+tiles = "C_000"
 [[entry]]
 filename = "M_003"
+type = "map"
+tiles = "C_000"
 [[entry]]
 filename = "M_004"
+type = "map"
+tiles = "C_000"
 [[entry]]
 filename = "M_005"
+type = "map"
+tiles = "C_000"
 [[entry]]
 filename = "M_006"
+type = "map"
+tiles = "C_000"
 [[entry]]
 filename = "M_010"
+type = "map"
+tiles = "C_010"
 [[entry]]
 filename = "M_011"
+type = "map"
+tiles = "C_010"
 [[entry]]
 filename = "M_012"
+type = "map"
+tiles = "C_010"
 [[entry]]
 filename = "M_013"
+type = "map"
+tiles = "C_010"
 [[entry]]
 filename = "M_014"
+type = "map"
+tiles = "C_010"
 [[entry]]
 filename = "M_015"
+type = "map"
+tiles = "C_010"
 [[entry]]
 filename = "M_016"
+type = "map"
+tiles = "C_010"
 [[entry]]
 filename = "M_017"
+type = "map"
+tiles = "C_010"
 [[entry]]
 filename = "M_020"
+type = "map"
+tiles = "C_020"
 [[entry]]
 filename = "M_021"
+type = "map"
+tiles = "C_020"
 [[entry]]
 filename = "M_022"
+type = "map"
+tiles = "C_020"
 [[entry]]
 filename = "M_023"
+type = "map"
+tiles = "C_020"
 [[entry]]
 filename = "M_024"
+type = "map"
+tiles = "C_020"
 [[entry]]
 filename = "M_025"
+type = "map"
+tiles = "C_020"
 [[entry]]
 filename = "M_030"
+type = "map"
+tiles = "C_030"
 [[entry]]
 filename = "M_031"
+type = "map"
+tiles = "C_030"
 [[entry]]
 filename = "M_032"
+type = "map"
+tiles = "C_030"
 [[entry]]
 filename = "M_033"
+type = "map"
+tiles = "C_030"
 [[entry]]
 filename = "M_034"
+type = "map"
+tiles = "C_030"
 [[entry]]
 filename = "M_035"
+type = "map"
+tiles = "C_030"
 [[entry]]
 filename = "M_036"
+type = "map"
+tiles = "C_030"
 [[entry]]
 filename = "M_040"
+type = "map"
+tiles = "C_040"
 [[entry]]
 filename = "M_041"
+type = "map"
+tiles = "C_040"
 [[entry]]
 filename = "M_042"
+type = "map"
+tiles = "C_040"
 [[entry]]
 filename = "M_043"
+type = "map"
+tiles = "C_040"
 [[entry]]
 filename = "M_044"
+type = "map"
+tiles = "C_040"
 [[entry]]
 filename = "M_045"
+type = "map"
+tiles = "C_040"
 [[entry]]
 filename = "M_046"
+type = "map"
+tiles = "C_040"
 [[entry]]
 filename = "M_047"
+type = "map"
+tiles = "C_040"
 [[entry]]
 filename = "M_048"
+type = "map"
+tiles = "C_040"
 [[entry]]
 filename = "M_049"
+type = "map"
+tiles = "C_040"
 [[entry]]
 filename = "M_250"
+type = "map"
+tiles = "C_040"
 mount = 0x5800
 [[entry]]
 filename = "M_251"
+type = "map"
+tiles = "C_040"
 mount = 0x5800
 
 [[entry]]
